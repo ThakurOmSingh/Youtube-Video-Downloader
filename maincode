@@ -1,0 +1,102 @@
+class exceptionclass(Exception):
+    pass
+from pytube import YouTube
+flag=0
+try: 
+    try:
+        link=input("Paste the link: ")
+        #moving the data of the link provided to the variable named youtube_1
+        youtube_1=YouTube(link)
+
+    except RegexMatchError :
+
+        print("Please enter a valid link")
+except NameError :
+    print("Please enter a valid link")
+    flag=1
+except Exception:
+    print("Invalid Link")
+    
+    
+    
+    
+print("RUNNING!!!!!!")
+print(youtube_1.title)#prints title of the youtube video
+#print(youtube_1.thumbnail_url)#gives the url of the thumbnail image
+videos=youtube_1.streams.all()#gives info about stream quality of video 
+videos=youtube_1.streams.filter(progressive=True)#gives only the streams which have bothe the audio and video file as one
+vid1=list(enumerate(videos))#coverting all streams into list
+try:
+    for i in vid1: #printing the list
+        print(i)
+        print("type of info is ",type(i))
+    print("done")
+    stream_input=int(input("ENTER"))#asking user his stream prefrence
+    videos[stream_input].download()#downloading user prefered strem video
+    print("Download succesful")#download complete
+except IndexError:
+    print("Please reload and enter the correct option")
+    flag=1
+except Exception:
+        print("Invalid Option")
+        flag=1
+finally:
+    if flag==1:
+        print("Please Reload")
+        
+--------------------------------------------------for audio only----------------------------------------------------------------------
+try:
+    flag=0
+    audios=youtube_1.streams.filter(type="audio")#gives info about stream quality of audio 
+    audio_list=list(enumerate(audios))#coverting all streams into list 
+    for i in audio_list: #printing the list
+        print(i)
+    stream_input=int(input("ENTER"))#asking user his stream prefrence
+    audios[stream_input].download()#downloading user prefered stream audio
+except IndexError:
+    print("Enter the correct option")
+    flag=1
+except Exception:
+    print("Invalid Option")
+    flag=1
+finally:
+    if flag==1:
+        print("Please Reload")
+if flag!=1:        
+    print("Download succesful")#download complete
+    
+-------------------------------------------------------for video------------------------------------------------------------------------
+import re
+print("RUNNING!!!!!!")
+print(youtube_1.title)#prints title of the youtube video
+print(youtube_1.thumbnail_url)#gives the url of the thumbnail image
+videos=youtube_1.streams.all()#gives info about stream quality of video 
+videos=youtube_1.streams.filter(progressive=True)#gives only the streams which have bothe the audio and video file as one
+vid1=list(enumerate(videos))#coverting all streams into list
+vid=[]
+count=0
+try:
+    for i in vid1: #printing the list
+        
+        j=str(i)
+        x = re.search("res", j)
+        y = re.search("fps", j)
+        x1=x.start()
+        y1=y.start()
+        print(count,j[x1:y1])
+        count=count+1
+except IndexError:
+    print("Please reload and enter the correct option")
+    flag=1
+except AttributeError:
+    print(" ")
+except Exception:
+        print("Invalid Option")
+        flag=1
+finally:
+    if flag==1:
+        print("Please Reload")
+print("done")
+stream_input=int(input("ENTER"))#asking user his stream prefrence
+videos[stream_input].download()#downloading user prefered strem video
+print("Download succesful")#download complete
